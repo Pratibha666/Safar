@@ -1,0 +1,10 @@
+/* global reset and ensure full-height for background */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+}
+
+/* you can also apply a solid fallback background here */
+body {
+  background-color: #000;
+}
