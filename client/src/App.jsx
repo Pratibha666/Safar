@@ -9,6 +9,7 @@ import Home from './components/Home.jsx'
 import { AuthProvider } from './auth.context.jsx'
 import Travel from './components/Travel.jsx'
 import Protected from './components/Protected.jsx'
+import AddTravel from './components/AddTravel.jsx'
 const App = () => {
   return (
     <AuthProvider>
@@ -29,6 +30,7 @@ const App = () => {
         <Route path='/' element={<Home/>} />
         <Route element={<Protected />}>
             <Route path='/travel' element={<Travel />} />
+            <Route path='/add-travel' element={<AddTravel />} />
         </Route>
         <Route path='/login' element={<Login/>} />
         <Route path='/signup' element={<Signup/>} />
