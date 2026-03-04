@@ -39,7 +39,6 @@ const Signup = () => {
         </Link>
       </div>
 
-      {/* Glass Card */}
       <div className="w-full max-w-md bg-zinc-900/70 backdrop-blur-xl border border-zinc-800 rounded-2xl shadow-2xl p-8 relative z-10">
         
         {/* Header */}

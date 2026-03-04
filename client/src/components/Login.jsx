@@ -6,18 +6,18 @@ const Login = () => {
   const { handleLogin } = useAuth()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [loading, setLoading] = useState(false) // <-- new state
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setLoading(true) // start loading
+    setLoading(true) 
     try {
       await handleLogin({ email, password })
       navigate("/travel")
     } catch (err) {
       console.log("error", err)
-      setLoading(false) // stop loading if error
+      setLoading(false)
     }
   }
 

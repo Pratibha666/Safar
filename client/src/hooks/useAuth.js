@@ -67,7 +67,7 @@ export const useAuth = () => {
     }
   }
 
-  // AUTO LOGIN (INITIAL CHECK)
+  // AUTO LOGIN
   useEffect(() => {
     const getAndSetUser = async () => {
       try {
@@ -76,7 +76,7 @@ export const useAuth = () => {
       } catch (error) {
         setUser(null)
       } finally {
-        setAuthInitialized(true) // mark initial auth check complete
+        setAuthInitialized(true) 
       }
     }
     getAndSetUser()
@@ -85,7 +85,7 @@ export const useAuth = () => {
   return {
     user,
     loading,
-    authInitialized, // NEW: track initial auth check
+    authInitialized, 
     handleLogin,
     handleSignup,
     handleLogout,

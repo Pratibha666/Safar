@@ -84,7 +84,7 @@ const Home = () => {
             desc: "Attach photos to each travel story beautifully",
           },
           {
-            title: "✨ AI Travel Writer",
+            title: "🌟 AI Travel Writer",
             desc: "Enhance descriptions using AI to make stories magical",
           },
         ].map((item, index) => (

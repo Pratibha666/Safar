@@ -28,7 +28,7 @@ const Travel = () => {
       <div className='bg-zinc-900/50 border border-zinc-800 rounded-2xl p-8'>
         <h2 className='text-2xl font-bold text-white mb-4'>Your Travel Diaries</h2>
         <p className='text-zinc-400'>
-          Start creating your travel memories here...
+          Start creating your travel memories here
         </p>
       </div>
     </div>
