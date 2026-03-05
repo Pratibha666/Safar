@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import {  Camera, MapPin, Calendar, Type, AlignLeft, Send } from 'lucide-react';
+import { Camera, MapPin, Calendar, Type, AlignLeft, Send, Upload, X } from 'lucide-react';
 
 const AddTravel = () => {
   const navigate = useNavigate();
@@ -8,33 +8,48 @@ const AddTravel = () => {
     title: '',
     location: '',
     date: '',
-    imageUrl: '',
     description: ''
   });
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState('');
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImageFile(file);
+      setImagePreview(URL.createObjectURL(file));
+    }
+  };
+
+  const removeImage = () => {
+    setImageFile(null);
+    setImagePreview('');
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Saving Story:", formData);
-    alert("Story Saved to your Safar!");
-    navigate('/travel'); 
+    const finalData = { ...formData, image: imageFile };
+    console.log("Saving Story:", finalData);
+    alert("Story Saved Successfully!");
+    navigate('/travel');
   };
 
   return (
     <div className="min-h-screen bg-black text-white p-4 md:p-8">
       {/* Header */}
       <div className="max-w-6xl mx-auto mb-10 flex items-center justify-between">
-        <div className="absolute top-9 left-10">
-        <Link
-          to="/travel"
-          className="px-8 py-2 rounded-md bg-lime-400 hover:bg-lime-500 text-black font-bold shadow-md"
-        >
+        <div className="md:static absolute top-9 left-4">
+          <Link
+            to="/travel"
+            className="px-6 py-2 rounded-md bg-lime-400 hover:bg-lime-50 text-black font-bold shadow-md transition-colors"
+          >
             Back
-        </Link>
-      </div>
+          </Link>
+        </div>
         <h1 className="text-2xl font-black italic tracking-tighter text-lime-400">NEW SAFAR</h1>
       </div>
 
@@ -91,20 +106,38 @@ const AddTravel = () => {
               </div>
             </div>
 
-            {/* Image URL */}
+            {/* Image Upload */}
             <div className="space-y-2">
               <label className="text-xs font-bold uppercase tracking-widest text-zinc-500 flex items-center gap-2">
-                <Camera size={14} /> Image URL
+                <Camera size={14} /> Upload Photo
               </label>
-              <input
-                required
-                type="url"
-                name="imageUrl"
-                placeholder="Paste an image link"
-                value={formData.imageUrl}
-                onChange={handleChange}
-                className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3 focus:outline-none focus:border-lime-400 focus:ring-1 focus:ring-lime-400 transition-all text-zinc-200"
-              />
+              
+              {!imagePreview ? (
+                <div className="relative group">
+                  <input
+                    required
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                  />
+                  <div className="w-full h-32 border-2 border-dashed border-zinc-800 rounded-xl flex flex-col items-center justify-center gap-2 group-hover:border-lime-400/50 transition-colors bg-zinc-900/30">
+                    <Upload size={24} className="text-zinc-500 group-hover:text-lime-400" />
+                    <span className="text-zinc-500 text-sm">Click to upload your best shot</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="relative w-full h-32 rounded-xl overflow-hidden border border-zinc-800">
+                  <img src={imagePreview} alt="Selected" className="w-full h-full object-cover" />
+                  <button 
+                    type="button"
+                    onClick={removeImage}
+                    className="absolute top-2 right-2 p-1 bg-black/60 rounded-full cursor-pointer hover:bg-red-500 transition-colors"
+                  >
+                    <X size={16} />
+                  </button>
+                </div>
+              )}
             </div>
 
             {/* Description Input */}
@@ -133,18 +166,18 @@ const AddTravel = () => {
           </form>
         </section>
 
+        {/* Preview Section */}
         <section className="sticky top-24 h-fit">
           <p className="text-xs font-bold uppercase tracking-[0.2em] text-zinc-600 mb-6 text-center">Live Preview</p>
           
           <div className="group bg-zinc-900/40 border border-zinc-800 rounded-3xl overflow-hidden max-w-sm mx-auto shadow-2xl">
             {/* Image Preview */}
             <div className="h-64 bg-zinc-800 overflow-hidden flex items-center justify-center">
-              {formData.imageUrl ? (
+              {imagePreview ? (
                 <img 
-                  src={formData.imageUrl} 
+                  src={imagePreview} 
                   alt="Preview" 
                   className="w-full h-full object-cover"
-                  onError={(e) => e.target.src = "https://images.unsplash.com/photo-1503220317375-aaad61436b1b?auto=format&fit=crop&q=80&w=800"} 
                 />
               ) : (
                 <div className="flex flex-col items-center text-zinc-600">
