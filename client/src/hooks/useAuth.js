@@ -15,11 +15,11 @@ export const useAuth = () => {
     try {
       const data = await login({ email, password })
       setUser(data?.user)
-      toast.success(data?.message || "Login successful!")
+      toast.success("Login successful!")
       return data?.user
     } catch (error) {
       const errorMsg = error.response?.data?.message || error.message || "Login failed"
-      toast.error(errorMsg)
+      toast.error("Login failed")
       console.error("Login error:", errorMsg)
       throw error
     } finally {
@@ -33,13 +33,13 @@ export const useAuth = () => {
   try {
     const data = await signup({ username, email, password, confirmPassword })
     setUser(data?.user)
-    toast.success(data?.message || "Account created successfully!")
+    toast.success("Account created successfully!")
     return data?.user
   } catch (error) {
     const errorMsg =
       error.response?.data?.message || error.message || "Signup failed"
 
-    toast.error(errorMsg)
+    toast.error("Signup failed")
     console.error("Signup error:", errorMsg)
 
     throw error  
@@ -54,11 +54,11 @@ export const useAuth = () => {
     try {
       const data = await logout()
       setUser(null)
-      toast.success(data?.message || "Logout successful!")
+      toast.success("Logout successful!")
       navigate("/")
     } catch (error) {
       const errorMsg = error.response?.data?.message || error.message || "Logout failed"
-      toast.error(errorMsg)
+      toast.error("Logout failed")
       console.error("Logout error:", errorMsg)
       setUser(null)
       navigate("/")
