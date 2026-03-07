@@ -56,7 +56,8 @@ const AddTravel = () => {
     navigate("/travel")
   } catch (error) {
     console.log(error)
-    toast.error(error.response?.data?.message || "Error creating travel story")
+    toast.error("Error creating travel story")
+  }finally{
     setLoading(false)
   }
 }
@@ -185,7 +186,7 @@ const AddTravel = () => {
               type="submit"
               disabled={loading}
               onClick={(e)=>loading && e.preventDefault()}
-              className={`w-full bg-lime-400 cursor-pointer hover:bg-lime-500 text-black font-black py-4 rounded-xl flex items-center justify-center gap-2 transition-all active:scale-[0.98] shadow-[0_0_20px_rgba(163,230,53,0.2)]${loading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
+              className={`w-full bg-lime-400 text-black font-black py-4 rounded-xl flex items-center justify-center gap-2 transition-all active:scale-[0.98] shadow-[0_0_20px_rgba(163,230,53,0.2)] ${loading ? "opacity-50 cursor-not-allowed" : "cursor-pointer hover:bg-lime-500"}`}
             >
               <Send size={18} />
               {loading?"PLEASE WAIT...":"PUBLISH STORY"}
