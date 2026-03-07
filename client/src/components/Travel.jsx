@@ -9,7 +9,7 @@ const Travel = () => {
   const { user, handleLogout } = useAuth()
   const [stories, setStories] = useState([])
   const [selectedStory, setSelectedStory] = useState(null) 
-
+  const [deletingId, setDeletingId] = useState(null)
   useEffect(() => {
     fetchStories()
   }, [])
@@ -27,18 +27,25 @@ const Travel = () => {
   }
 
   const handleDelete = async (id, e) => {
-    e.stopPropagation()
-      try {
-        await axios.delete(
-          `http://localhost:8080/api/travel/delete-travel/${id}`,
-          { withCredentials: true }
-        )
-        setStories(stories.filter(story => story._id !== id))
-        toast.info("Story deleted successfully!!")
-      } catch (error) {
-        console.log("Error deleting story:", error)
-      }
+  e.stopPropagation()
+  setDeletingId(id)
+
+  try {
+    await axios.delete(
+      `http://localhost:8080/api/travel/delete-travel/${id}`,
+      { withCredentials: true }
+    )
+
+    setStories(prev => prev.filter(story => story._id !== id))
+    toast.info("Story deleted successfully!")
+
+  } catch (error) {
+    console.log("Error deleting story:", error)
+    toast.error("Failed to delete story")
+  } finally {
+    setDeletingId(null)
   }
+}
 
   return (
     <div className='w-full min-h-screen bg-black text-white selection:bg-lime-400 selection:text-black'>
@@ -82,7 +89,11 @@ const Travel = () => {
                 onClick={(e) => handleDelete(story._id, e)}
                 className='absolute top-4 left-4 z-10 p-2 bg-black/60 backdrop-blur-md rounded-full text-zinc-400 hover:bg-red-500 hover:text-white transition-all duration-300 opacity-0 cursor-pointer group-hover:opacity-100'
               >
+                {deletingId === story._id ? (
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                ) : (
                 <Trash2 size={16} />
+                )}
               </button>
 
               <div className='h-56 overflow-hidden relative'>
@@ -125,7 +136,7 @@ const Travel = () => {
             
             <button 
               onClick={() => setSelectedStory(null)}
-              className="absolute top-4 right-4 z-20 p-2 bg-black/50 hover:bg-lime-400 hover:text-black rounded-full transition-all"
+              className="absolute top-4 right-7 z-20 p-2 bg-black/50 hover:bg-red-600 hover:text-white rounded-sm cursor-pointer transition-all"
             >
               <X size={20} />
             </button>
