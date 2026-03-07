@@ -1,5 +1,5 @@
 import travelModel from "../models/travel.model.js";
-
+import cloudinary from "../config/cloudinary.js";
 export const createTravel = async (req, res) => {
   try {
     const { title, location, date, description } = req.body;
@@ -16,6 +16,7 @@ export const createTravel = async (req, res) => {
       date,
       description,
       imageurl: req.file.path,
+      public_id: req.file.filename,
       user:req.userId 
     });
 
@@ -60,11 +61,16 @@ export const deleteTravel = async (req, res) => {
   try {
     const { id } = req.params
 
-    const deletedTravel = await Travel.findByIdAndDelete(id)
+    const travel = await travelModel.findById(id)
 
-    if (!deletedTravel) {
+    if (!travel) {
       return res.status(404).json({ message: "Travel not found" })
     }
+
+    // deleting image from Cloudinary
+    await cloudinary.uploader.destroy(travel.public_id)
+
+    await travelModel.findByIdAndDelete(id)
 
     res.status(200).json({
       message: "Travel deleted successfully"
