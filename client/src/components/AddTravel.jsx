@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Camera, MapPin, Calendar, Type, AlignLeft, Send, Upload, X } from 'lucide-react';
+import {toast} from "react-toastify"
+import axios from "axios"
 
 const AddTravel = () => {
   const navigate = useNavigate();
@@ -12,7 +14,7 @@ const AddTravel = () => {
   });
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState('');
-
+  const [loading,setLoading]=useState(false)
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -30,13 +32,35 @@ const AddTravel = () => {
     setImagePreview('');
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const finalData = { ...formData, image: imageFile };
-    console.log("Saving Story:", finalData);
-    alert("Story Saved Successfully!");
-    navigate('/travel');
-  };
+  const handleSubmit = async (e) => {
+  e.preventDefault()
+    setLoading(true)
+  try {
+    const data = new FormData()
+    data.append("title", formData.title)
+    data.append("location", formData.location)
+    data.append("date", formData.date)
+    data.append("description", formData.description)
+    data.append("image", imageFile)
+
+    const res = await axios.post(
+      "http://localhost:8080/api/travel/add-travel",
+      data,
+      { withCredentials: true }
+    )
+
+    toast.success("Story Saved Successfully!")
+    setFormData({ title:'', location:'', date:'', description:'' })
+    setImageFile(null)
+    setImagePreview('')
+    navigate("/travel")
+  } catch (error) {
+    console.log(error)
+    toast.error(error.response?.data?.message || "Error creating travel story")
+    setLoading(false)
+  }
+}
+
 
   return (
     <div className="min-h-screen bg-black text-white p-4 md:p-8">
@@ -118,6 +142,7 @@ const AddTravel = () => {
                     required
                     type="file"
                     accept="image/*"
+                    name="image"
                     onChange={handleImageChange}
                     className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
                   />
@@ -158,10 +183,12 @@ const AddTravel = () => {
 
             <button
               type="submit"
-              className="w-full bg-lime-400 cursor-pointer hover:bg-lime-500 text-black font-black py-4 rounded-xl flex items-center justify-center gap-2 transition-all active:scale-[0.98] shadow-[0_0_20px_rgba(163,230,53,0.2)]"
+              disabled={loading}
+              onClick={(e)=>loading && e.preventDefault()}
+              className={`w-full bg-lime-400 cursor-pointer hover:bg-lime-500 text-black font-black py-4 rounded-xl flex items-center justify-center gap-2 transition-all active:scale-[0.98] shadow-[0_0_20px_rgba(163,230,53,0.2)]${loading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
             >
               <Send size={18} />
-              PUBLISH STORY
+              {loading?"PLEASE WAIT...":"PUBLISH STORY"}
             </button>
           </form>
         </section>

@@ -77,15 +77,15 @@ const Home = () => {
         {[
           {
             title: "📍 Store Your Trips",
-            desc: "Save places, dates, and memories from every journey effortlessly.",
+            desc: "Save places, dates, and memories from every journey effortlessly",
           },
           {
             title: "🖼️ Upload Photos",
-            desc: "Attach high-quality photos to each travel story and create a visual map.",
+            desc: "Attach high-quality photos to each travel story and create a visual map",
           },
           {
             title: "🌟 AI Travel Writer",
-            desc: "Enhance your descriptions using AI to make your stories sound magical.",
+            desc: "Enhance your descriptions using AI to make your stories sound magical",
           },
         ].map((item, index) => (
           <div

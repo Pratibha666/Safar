@@ -6,7 +6,7 @@ import { signup, login, logout, getMe } from "../services/auth.api.js"
 
 export const useAuth = () => {
   const { user, setUser, loading, setLoading } = useContext(AuthContext)
-  const [authInitialized, setAuthInitialized] = useState(false) // NEW
+  const [authInitialized, setAuthInitialized] = useState(false) 
   const navigate = useNavigate()
 
   // LOGIN
