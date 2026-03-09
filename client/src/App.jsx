@@ -10,6 +10,7 @@ import { AuthProvider } from './auth.context.jsx'
 import Travel from './components/Travel.jsx'
 import Protected from './components/Protected.jsx'
 import AddTravel from './components/AddTravel.jsx'
+import ChatBot from './components/chatBot.jsx'
 const App = () => {
   return (
     <AuthProvider>
@@ -29,8 +30,19 @@ const App = () => {
       <Routes>
         <Route path='/' element={<Home/>} />
         <Route element={<Protected />}>
-            <Route path='/travel' element={<Travel />} />
-            <Route path='/add-travel' element={<AddTravel />} />
+            <Route path='/travel' element={
+              <>
+              <Travel />
+              <ChatBot />
+              </>
+              } />
+            <Route path='/add-travel' element={
+              <>
+              <AddTravel />
+              <ChatBot />
+              </>
+              } />
+
         </Route>
         <Route path='/login' element={<Login/>} />
         <Route path='/signup' element={<Signup/>} />
