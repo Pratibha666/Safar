@@ -68,6 +68,13 @@ const Login = () => {
               className="w-full px-4 py-3 rounded-xl bg-zinc-800 text-lime-300 placeholder-zinc-500 border border-zinc-700 focus:outline-none focus:ring-2 focus:ring-lime-400 transition"
             />
           </div>
+          <div>
+            <Link to={"/password/forgot-password"}>
+                <p className="flex justify-end mt-3 text-gray-500 cursor-pointer hover:text-lime-500 font-semibold">
+                  Forgot password?
+                </p>
+              </Link>
+          </div>
 
           <button
             type="submit"

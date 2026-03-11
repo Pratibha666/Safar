@@ -14,7 +14,13 @@ const userSchema=new mongoose.Schema({
     password:{
         type:String,
         required:true,
-    }
+    },
+    forgot_password_otp:{
+        type: String,
+    },
+    forgot_password_expiry:{
+        type: Date,
+    },
 },{timestamps:true})
 
 export default mongoose.model("User",userSchema)

@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser'
 import cors from "cors"
 import travelRouter from "../routes/travel.routes.js";
 import aiRouter from "../routes/ai.routes.js";
+import passwordRouter from "../routes/password.routes.js";
 const app=express()
 app.use(cookieParser())
 app.use(express.json())
@@ -14,5 +15,6 @@ app.use(cors({
 app.use('/api/auth',authRouter)
 app.use('/api/travel',travelRouter)
 app.use('/api/ai',aiRouter)
+app.use('/api/password',passwordRouter)
 
 export default app

@@ -19,7 +19,7 @@ export const useAuth = () => {
       return data?.user
     } catch (error) {
       const errorMsg = error.response?.data?.message || error.message || "Login failed"
-      toast.error("Login failed")
+      toast.error("Login failed!")
       console.error("Login error:", errorMsg)
       throw error
     } finally {
@@ -39,7 +39,7 @@ export const useAuth = () => {
     const errorMsg =
       error.response?.data?.message || error.message || "Signup failed"
 
-    toast.error("Signup failed")
+    toast.error("Signup failed!")
     console.error("Signup error:", errorMsg)
 
     throw error  
@@ -58,7 +58,7 @@ export const useAuth = () => {
       navigate("/")
     } catch (error) {
       const errorMsg = error.response?.data?.message || error.message || "Logout failed"
-      toast.error("Logout failed")
+      toast.error("Logout failed!")
       console.error("Logout error:", errorMsg)
       setUser(null)
       navigate("/")

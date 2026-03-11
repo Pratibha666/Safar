@@ -11,6 +11,9 @@ import Travel from './components/Travel.jsx'
 import Protected from './components/Protected.jsx'
 import AddTravel from './components/AddTravel.jsx'
 import ChatBot from './components/chatBot.jsx'
+import ForgotPassword from './components/ForgotPassword.jsx'
+import VerifyForgotPassword from './components/VerifyForgotPassword.jsx'
+import ResetPassword from './components/ResetPassword.jsx'
 const App = () => {
   return (
     <AuthProvider>
@@ -42,8 +45,10 @@ const App = () => {
               <ChatBot />
               </>
               } />
-
         </Route>
+        <Route path='/password/forgot-password' element={<ForgotPassword />} />
+        <Route path='/password/verify-forgot-password' element={<VerifyForgotPassword />} />
+        <Route path='/password/reset-password' element={<ResetPassword />} />
         <Route path='/login' element={<Login/>} />
         <Route path='/signup' element={<Signup/>} />
       </Routes>
