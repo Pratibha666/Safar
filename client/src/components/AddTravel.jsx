@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Camera, MapPin, Calendar, Type, AlignLeft, Send, Upload, X, Sparkles, Loader2 } from 'lucide-react';
 import { toast } from "react-toastify";
 import axios from "axios";
-
+const API_URL = import.meta.env.VITE_API_URL
 const AddTravel = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -36,7 +36,7 @@ const AddTravel = () => {
     
     setGenerating(true);
     try {
-      const res = await axios.post("http://localhost:8080/api/ai/generate-story", formData);
+      const res = await axios.post(`${API_URL}/api/ai/generate-story`, formData);
       setFormData(prev => ({ ...prev, description: res.data.story }));
       toast.success("AI has crafted your story!");
     } catch (error) {
@@ -62,7 +62,7 @@ const AddTravel = () => {
       Object.keys(formData).forEach(key => data.append(key, formData[key]));
       data.append("image", imageFile);
 
-      await axios.post("http://localhost:8080/api/travel/add-travel", data, { withCredentials: true });
+      await axios.post(`${API_URL}/api/travel/add-travel`, data, { withCredentials: true });
       toast.success("Memory captured successfully!");
       navigate("/travel");
     } catch (error) {

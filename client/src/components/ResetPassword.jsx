@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-
+const API_URL = import.meta.env.VITE_API_URL
 const ResetPassword = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -23,7 +23,7 @@ const ResetPassword = () => {
     try {
       setLoading(true)
       const { data } = await axios.put(
-        "http://localhost:8080/api/password/reset-password",
+        `${API_URL}/api/password/reset-password`,
         { email, password, confirmPassword }
       );
 

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-
+const API_URL = import.meta.env.VITE_API_URL
 const VerifyForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
@@ -22,7 +22,7 @@ const VerifyForgotPassword = () => {
       setLoading(true);
       // console.log("VERIFY OTP DATA:", { email, otp });
       const { data } = await axios.put(
-        "http://localhost:8080/api/password/verify-forgot-password",
+        `${API_URL}/api/password/verify-forgot-password`,
         {
           email,
           otp,

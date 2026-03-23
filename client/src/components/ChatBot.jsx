@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Send, MapPin, User, Bot, Loader2, X } from "lucide-react";
-
+const API_URL = import.meta.env.VITE_API_URL
 const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState("");
@@ -39,7 +39,7 @@ const ChatBot = () => {
     setIsTyping(true);
 
     try {
-      const res = await axios.post("http://localhost:8080/api/ai/chat", {
+      const res = await axios.post(`${API_URL}/api/ai/chat`, {
         message,
       });
 

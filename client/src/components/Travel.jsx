@@ -4,7 +4,7 @@ import { Plus, MapPin, Calendar, LogOut, Trash2, X } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { toast } from 'react-toastify'
-
+const API_URL = import.meta.env.VITE_API_URL
 const Travel = () => {
   const { user, handleLogout } = useAuth()
   const [stories, setStories] = useState([])
@@ -17,7 +17,7 @@ const Travel = () => {
   const fetchStories = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:8080/api/travel/get-travel",
+        `${API_URL}/api/travel/get-travel`,
         { withCredentials: true }
       )
       setStories(res.data.travels.reverse())
@@ -32,7 +32,7 @@ const Travel = () => {
 
   try {
     await axios.delete(
-      `http://localhost:8080/api/travel/delete-travel/${id}`,
+      `${API_URL}/api/travel/delete-travel/${id}`,
       { withCredentials: true }
     )
 
