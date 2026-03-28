@@ -3,6 +3,7 @@ import bcryptjs from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import blacklistTokenModel from '../models/blacklist.model.js'
 
+console.log("JWT_SECRET is set?", process.env.JWT_SECRET ? "YES" : "NO")
 // @desc Register a new user
 // @route POST /api/auth/register
 // @access Public
@@ -54,6 +55,8 @@ export const registerUser=async(req,res)=>{
 // @route POST /api/auth/login
 // @access Public
 export const loginUser=async(req,res)=>{
+    console.log("Login attempt:", req.body) 
+    console.log("JWT_SECRET:", process.env.JWT_SECRET)
     try {
         const {email,password}=req.body
         const user=await userModel.findOne({email})
