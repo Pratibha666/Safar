@@ -1,29 +1,25 @@
-import nodemailer from 'nodemailer';
-import dotenv from 'dotenv';
+import SibApiV3Sdk from 'sib-api-v3-sdk';
 
-dotenv.config();
+const client = SibApiV3Sdk.ApiClient.instance;
 
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.ADMIN_EMAIL,
-    pass: process.env.APP_PASSWORD,
-  },
-});
+client.authentications['api-key'].apiKey = process.env.BREVO_API_KEY;
 
-const sendEmail = async ({ to, subject, html, text = '' }) => {
+const emailApi = new SibApiV3Sdk.TransactionalEmailsApi();
+
+const sendEmail = async ({ to, subject, html }) => {
   try {
-    const info = await transporter.sendMail({
-      from: `"Safar" <${process.env.ADMIN_EMAIL}>`,
-      to,
+    await emailApi.sendTransacEmail({
+      sender: {
+        name: 'Safar',
+        email: 'pratibha.yadav1128@gmail.com' 
+      },
+      to: [{ email: to }],
       subject,
-      text,
-      html,
+      htmlContent: html
     });
-    console.log('Email sent:', info.response);
   } catch (error) {
-    console.error('Error sending email:', error);
-    throw error; 
+    console.error('Brevo Email Error:', error);
+    throw error;
   }
 };
 
