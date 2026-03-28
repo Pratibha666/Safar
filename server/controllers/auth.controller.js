@@ -31,7 +31,12 @@ export const registerUser=async(req,res)=>{
     await newUser.save()
 
     const token=jwt.sign({id:newUser._id},process.env.JWT_SECRET,{expiresIn:'1h'})
-    res.cookie("token",token)
+    res.cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+        maxAge: 60 * 60 * 1000 // 1 hour
+    });
     return res.status(201).json({message:'User registered successfully',
         user:{
             id:newUser._id,
@@ -60,7 +65,12 @@ export const loginUser=async(req,res)=>{
             return res.status(400).json({message:'Invalid email or password'})
         }
         const token=jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:'1h'})
-        res.cookie("token",token)
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "none",
+            maxAge: 60 * 60 * 1000 // 1 hour
+        });
         return res.status(200).json({message:'Login successful',
         user:{
             id:user._id,
