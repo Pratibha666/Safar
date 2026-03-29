@@ -5,7 +5,7 @@ const BREVO_API_URL = "https://api.brevo.com/v3/smtp/email";
 const sendEmail = async ({ to, subject, html }) => {
   try {
     const response = await axios.post(
-      BREVO_API_KEY,
+      BREVO_API_URL,
       {
         sender: {
           name: process.env.BREVO_SENDER_NAME || "Safar",
